@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace CSharpTest
 {
@@ -55,9 +56,25 @@ namespace CSharpTest
         }
     }
 
-
     class Program
     {
+        public static void PrintCurDirFileInfo(string dir, ref int len)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(dir);
+            Console.WriteLine(new string(' ', len)+@"|-"+"{0}", dirInfo.Name);
+            FileInfo[] files = dirInfo.GetFiles();
+            DirectoryInfo[] dirs = dirInfo.GetDirectories();
+            foreach (FileInfo file in files)
+            {
+                Console.WriteLine(new string(' ', len+1)+@"|-"+"{0}", file.Name);
+            }
+            foreach (DirectoryInfo directory in dirs)
+            {
+                len++;
+                PrintCurDirFileInfo(dir+directory.Name+"/", ref len);
+            }
+        }
+
         static void Main(string[] args)
         {
             Man m1 = new Man("GayGay");
@@ -72,7 +89,9 @@ namespace CSharpTest
             Human child = father + mother;
             child.ShowName();
 
-            Console.WriteLine("Something change");
+            PrintCurDirFileInfo(@"./", ref deep);
         }
+
+        static int deep = 0;
     }
 }
