@@ -71,6 +71,8 @@ namespace CSharpTest
             mother.SetName("Ana");
             Human child = father + mother;
             child.ShowName();
+
+            Console.WriteLine("Something change");
         }
     }
 }
