@@ -58,6 +58,44 @@ namespace CSharpTest
 
     class Program
     {
+        public static void PrintArray(int[] array)
+        {
+            string arrayStr = string.Join(",", array);
+            Console.WriteLine(arrayStr);
+        }
+
+        public static void QuickSort(int[] array, int start, int end)
+        {
+            int left, right, key;
+            if (start >= end) return;
+            left = start;
+            right = end;
+            key = array[start];
+
+            while(left != right)
+            {
+                while(array[right] >= key && left < right)
+                {
+                    right--;
+                }
+
+                while(array[left] <= key && left < right)
+                {
+                    left++;
+                }
+
+                int temp = array[left];
+                array[left] = array[right];
+                array[right] = temp;
+            }
+
+            array[start] = array[left];
+            array[left] = key;
+
+            QuickSort(array, start, left - 1);
+            QuickSort(array, left + 1, end);
+        }
+
         public static void PrintCurDirFileInfo(string dir, ref int len)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(dir);
@@ -77,6 +115,7 @@ namespace CSharpTest
 
         static void Main(string[] args)
         {
+            /*
             Man m1 = new Man("GayGay");
             m1.ShowName();
             Woman wm1 = new Woman("Monkey");
@@ -90,6 +129,13 @@ namespace CSharpTest
             child.ShowName();
 
             PrintCurDirFileInfo(@"./", ref deep);
+            */
+            int[] array = new int[10]{6,4,7,5,1,3,2,8,10,9};
+            Console.WriteLine("The array before QuickSort is : ");
+            PrintArray(array);
+            QuickSort(array, 0, array.Length - 1);
+            Console.WriteLine("The array after QuickSort is : ");
+            PrintArray(array);
         }
 
         static int deep = 0;
